@@ -5,20 +5,27 @@ import datetime
 
 
 class Menu(models.Model):
-    restaurant = models.ForeignKey(Restaurant, related_name='menus', on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(
+        Restaurant,
+        related_name='menus',
+        on_delete=models.CASCADE)
     date = models.DateField(default=datetime.date.today)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
 
     class Meta:
-        unique_together = ('restaurant', 'date')  # A restaurant can only have one menu per day
+        # A restaurant can only have one menu per day
+        unique_together = ('restaurant', 'date')
 
     def __str__(self):
         return f"{self.restaurant.name} Menu for {self.date}"
 
 
 class Dish(models.Model):
-    menu = models.ForeignKey(Menu, related_name='dishes', on_delete=models.CASCADE)
+    menu = models.ForeignKey(
+        Menu,
+        related_name='dishes',
+        on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
 
@@ -27,12 +34,19 @@ class Dish(models.Model):
 
 
 class Vote(models.Model):
-    menu = models.ForeignKey(Menu, related_name='votes', on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, related_name='votes', on_delete=models.CASCADE)
+    menu = models.ForeignKey(
+        Menu,
+        related_name='votes',
+        on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        Employee,
+        related_name='votes',
+        on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('menu', 'employee')  # An employee can only vote once for each menu
+        # An employee can only vote once for each menu
+        unique_together = ('menu', 'employee')
 
     def __str__(self):
         return f"{self.employee.user.username} voted for {self.menu}"

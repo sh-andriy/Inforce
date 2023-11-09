@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres-13
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+  web:
+    build: ./lunch_decision_service
+    command: gunicorn lunch_decision_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./lunch_decision_service:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_DB_NAME=postgres-13
+      - DJANGO_DB_USER=postgres
+      - DJANGO_DB_PASSWORD=password
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+
+volumes:
+  postgres_data:
