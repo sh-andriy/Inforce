@@ -18,10 +18,8 @@ class MenuCreateView(generics.CreateAPIView):
     serializer_class = MenuSerializer
 
     def perform_create(self, serializer):
-        # Ensure the restaurant is owned by the user creating the menu
         restaurant_id = self.request.data.get('restaurant')
         restaurant = generics.get_object_or_404(Restaurant, pk=restaurant_id)
-        # Perform additional permissions check here if needed
         serializer.save(restaurant=restaurant)
 
 
