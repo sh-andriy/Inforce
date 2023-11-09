@@ -20,6 +20,10 @@ Welcome to the Lunch Decision Service project! This backend service is designed 
 - [Docker](https://www.docker.com/) - A set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.
 - [PyTest](https://pytest.org/) - A framework that makes it easy to write simple tests, yet scales to support complex functional testing.
 - [Flake8](https://flake8.pycqa.org/en/latest/) - A tool for style guide enforcement.
+<hr>
+
+## Note that All the ``REST API's`` have been tested in ``Postman``:
+![POSTMAN.png](POSTMAN.png)
 
 ## Quick Start
 
@@ -66,4 +70,9 @@ python manage.py createsuperuser
 ## Run server:
 ```shell
 python manage.py runserver
+```
+
+### To run autopep8 on a file:
+```shell
+autopep8 --in-place --aggressive --aggressive <filename>
 ```
